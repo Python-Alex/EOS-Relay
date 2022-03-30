@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "bHIqIarFcfCZjA6THTUdN2VKKi5lqlIRainiifKI4YTJI5ezvH7mhCXAEkLlhfe7SACBQp5/AYdcMcPqvxt/gQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\devpc\\source\\repos\\EOSChat\\EOSChat\\EOSChat.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\devpc\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

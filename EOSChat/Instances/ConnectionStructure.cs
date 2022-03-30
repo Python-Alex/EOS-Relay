@@ -10,7 +10,7 @@ namespace EOSChat
     // IDisposable so we can properly cleanup this class, preventing possible memory leaks
     public class ConnectionStructure : IDisposable
     {
-        // transforms into client structure after login/regster process
+        // references into client structure after login/regster process
 
         public Socket Socket;
         public IPEndPoint IpEndPoint;
@@ -44,7 +44,7 @@ namespace EOSChat
         {
             while(true)
             {
-                byte[] receivedData = new Byte[2048];
+                byte[] receivedData = new Byte[Application.ResourceLimit.MaxDataReceive];
                 int receivedBytes = 0;
 
                 try
