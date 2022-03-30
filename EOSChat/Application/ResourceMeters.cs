@@ -12,6 +12,7 @@ namespace EOSChat.Application
         public static Int64 BytesReceivedTotal = 0;
         public static Int64 BytesReceivedBefore = 0;
         public static Int64 ConnectionsReceivedLastHour = 0;
+        public static Int64 MaxBandwidthPerClient = 0;
         public static Int64 _ConnectionTimerTick = 0;
         public static Int64 _DataCheckTimerTick = 0;
         public static Timer Timer;
@@ -68,7 +69,7 @@ namespace EOSChat.Application
 
     public static class ResourceLimit
     {
-        public static Int64 MaxPayloadReceivesPerMinute = 600; // 600 pps
-        public static Int64 MaxDataReceivePerMinute = MaxPayloadReceivesPerMinute * 600; // ~351kbps
+        public static Int64 MaxPayloadReceivesPerMinute = 0;
+        public static Int64 MaxDataReceive = 0; 
     }
 }

@@ -6,9 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="6.3.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="Stack247.System.Web.UI.DataBinder" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
