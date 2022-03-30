@@ -1,0 +1,41 @@
+﻿[0.0.1]
+
+Clients changing profile details must do the following 
+	- Notify the server each time the Username, Email, Password hash was Changed Client Side.
+		# Failure will result in the server not saving your details, thus changes only being client side
+
+Clients sending a message must do the following
+	- Notify the server every time a message is sent from [your] client side
+		# Failure will result in the server not relaying the message to the specified user
+
+	- Static Message Buffer is ~2000 bytes, further update will specify a specific or customizable buffer limit
+		# Failure will result in the server not properly receiving the message
+
+Clients sending or denying a friend request must do the following
+	- Notify the server whenever you deny a friend request
+		# failure will result in unncessary pending friend timeouts
+
+	- Notify the server whenever you send a friend request
+		# failure will result in client never receiving request
+
+Clients ignoring or removing a friend must do the following
+	- Notify the server whenver you remove a client
+		# failure will result in the friend never being unfriended server side, thus allowing the ignore option unusable
+
+	- Notify the server whenever you ignore thre client, or remove the ignore
+		# failure will result in the server side, allowing the client to be ignored, or to never be un-ignored
+
+Clients registering must do the following
+	- Notify the server with the details needed, username|passwordHash|email
+		# failure will result in the server side not registering the account
+
+Clients logging in must do the following
+	- Notify the server with the details needed username or email|passwordHash
+		# failure will result in the server refusing your client login request
+
+Clients receiving an error of any form must do the following
+	- Ignore or Display the Error
+
+Clients receiving a unauthorized error must do the following
+	- Will be forcefully disconnected after 3 errors
+		# the attempts will reset in 24 hours
