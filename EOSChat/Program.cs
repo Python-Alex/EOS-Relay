@@ -15,6 +15,9 @@ namespace EOSChat
             BackendService.StartService("0.0.0.0", 52030);
             DeliveryService.StartService();
 
+            Thread _resourceThread = new Thread(() => ResourceMeters.StartResourcing());
+            _resourceThread.Start();
+
             while (true)
             {
                 Thread.Sleep(500);

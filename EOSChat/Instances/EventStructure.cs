@@ -212,7 +212,9 @@ namespace EOSChat
 
         static void Event_ClientMessageSend(ClientStructure clientStructure, string eventContent, string clientId)
         {
-            Console.WriteLine("[ClientAction] " + clientStructure.Id + " Sending Message to " + clientId);
+            if (clientStructure.Id == clientId)
+                return;
+
             ClientStructure receivingClient = ActiveClientStructure.FromId(clientId);
             if (receivingClient is null)
                 return;

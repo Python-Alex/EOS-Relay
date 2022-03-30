@@ -7,7 +7,8 @@ using System.Net.Sockets;
 
 namespace EOSChat
 {
-    public class ConnectionStructure
+    // IDisposable so we can properly cleanup this class, preventing possible memory leaks
+    public class ConnectionStructure : IDisposable
     {
         // transforms into client structure after login/regster process
 
@@ -15,6 +16,20 @@ namespace EOSChat
         public IPEndPoint IpEndPoint;
         public ConnectionState connectionState = ConnectionState.CONNECTION_STATE;
         public ClientStructure clientStructure;
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        ~ConnectionStructure()
+        {
+            Dispose(false);
+        }
+        public virtual void Dispose(bool disposing)
+        {
+            
+        }
 
         public ConnectionStructure(Socket socket, IPEndPoint ipendpoint)
         {
@@ -45,6 +60,8 @@ namespace EOSChat
                         ActiveClientStructure.clientStructures.Remove(clientStructure);
                         ThreadPersistance.RemovingClientCallWaiting = false;
                     }
+
+                    
                         
                     Console.WriteLine("[ConnectionStructure] Connection Error {0} | {1}", this.Socket.Handle, error.Message);
                     return;
@@ -60,11 +77,11 @@ namespace EOSChat
                 {
                     payloadObject = JsonConvert.DeserializeObject(stringContent);
 
-                    Console.WriteLine(payloadObject.ToString());
-
                     EventFlag eventFlag = (EventFlag)payloadObject.flag;
                     string eventContent = (string)payloadObject.content;
                     string clientId = (string)payloadObject.clientId;
+
+                    Console.WriteLine($"[ConnectionStructure] Parsed Payload with Flag " + eventFlag.ToString());
 
                     if (clientId is null)
                         clientId = "";
