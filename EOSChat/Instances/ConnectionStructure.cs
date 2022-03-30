@@ -7,7 +7,8 @@ using System.Net.Sockets;
 
 namespace EOSChat
 {
-    public class ConnectionStructure
+    // IDisposable so we can properly cleanup this class, preventing possible memory leaks
+    public class ConnectionStructure : IDisposable
     {
         // transforms into client structure after login/regster process
 
@@ -15,6 +16,23 @@ namespace EOSChat
         public IPEndPoint IpEndPoint;
         public ConnectionState connectionState = ConnectionState.CONNECTION_STATE;
         public ClientStructure clientStructure;
+        public int PacketsReceived = 0;
+        public int TotalBytesReceived = 0;
+        public bool RestrictedReceive = false;
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        ~ConnectionStructure()
+        {
+            Dispose(false);
+        }
+        public virtual void Dispose(bool disposing)
+        {
+            
+        }
 
         public ConnectionStructure(Socket socket, IPEndPoint ipendpoint)
         {
@@ -33,6 +51,9 @@ namespace EOSChat
                 {
                     receivedBytes = this.Socket.Receive(receivedData);
                     Application.ResourceMeters.BytesReceivedTotal += receivedBytes;
+                    TotalBytesReceived += receivedBytes;
+                    
+                    
 
                 } catch (Exception error)
                 {
@@ -45,10 +66,15 @@ namespace EOSChat
                         ActiveClientStructure.clientStructures.Remove(clientStructure);
                         ThreadPersistance.RemovingClientCallWaiting = false;
                     }
+
+                    
                         
                     Console.WriteLine("[ConnectionStructure] Connection Error {0} | {1}", this.Socket.Handle, error.Message);
                     return;
                 }
+
+                if (RestrictedReceive)
+                    continue;
 
                 string stringContent = Encoding.ASCII.GetString(receivedData, 0, receivedBytes);
                 if (receivedBytes == 0 || receivedBytes == 2)
@@ -60,11 +86,13 @@ namespace EOSChat
                 {
                     payloadObject = JsonConvert.DeserializeObject(stringContent);
 
-                    Console.WriteLine(payloadObject.ToString());
+                    PacketsReceived += 1;
 
                     EventFlag eventFlag = (EventFlag)payloadObject.flag;
                     string eventContent = (string)payloadObject.content;
                     string clientId = (string)payloadObject.clientId;
+
+                    Console.WriteLine($"[ConnectionStructure] Parsed Payload with Flag " + eventFlag.ToString());
 
                     if (clientId is null)
                         clientId = "";

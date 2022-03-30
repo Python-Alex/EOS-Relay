@@ -30,9 +30,10 @@ namespace EOSChat
 
         GENERAL_ERROR = 15,
         UPDATE_ERROR = 16,
-        UPDATE_SUCCESSFUL = 17,
+        RATELIMIT_ERROR = 17,
+        UPDATE_SUCCESSFUL = 18,
 
-        CLIENT_LIST_UPDATE = 18, // DeliveryService.cs  done - T
+        CLIENT_LIST_UPDATE = 19, // DeliveryService.cs  done - T
 
         LOGIN_STATE_SUCCESSFUL = 98, 
         LOGIN_STATE_FAILURE = 99,
@@ -212,7 +213,9 @@ namespace EOSChat
 
         static void Event_ClientMessageSend(ClientStructure clientStructure, string eventContent, string clientId)
         {
-            Console.WriteLine("[ClientAction] " + clientStructure.Id + " Sending Message to " + clientId);
+            if (clientStructure.Id == clientId)
+                return;
+
             ClientStructure receivingClient = ActiveClientStructure.FromId(clientId);
             if (receivingClient is null)
                 return;
