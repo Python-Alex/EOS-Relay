@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "36aSml2Ai2C68cTQWpLs2N3dvcAbHlBeLsvL+vTid4Gc+XZzJStS66nAZYK1eS8TnpBnNKwLcS4TD/XIFRVzUg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\devpc\\source\\repos\\EOSChat\\EOSChat\\EOSChat.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\devpc\\.nuget\\packages\\autofac\\6.3.0\\autofac.6.3.0.nupkg.sha512",
+    "C:\\Users\\devpc\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\devpc\\.nuget\\packages\\stack247.system.web.ui.databinder\\1.0.0\\stack247.system.web.ui.databinder.1.0.0.nupkg.sha512",
+    "C:\\Users\\devpc\\.nuget\\packages\\system.diagnostics.diagnosticsource\\4.7.1\\system.diagnostics.diagnosticsource.4.7.1.nupkg.sha512"
+  ],
+  "logs": []
+}
