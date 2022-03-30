@@ -16,6 +16,9 @@ namespace EOSChat
         public IPEndPoint IpEndPoint;
         public ConnectionState connectionState = ConnectionState.CONNECTION_STATE;
         public ClientStructure clientStructure;
+        public int PacketsReceived = 0;
+        public int TotalBytesReceived = 0;
+        public bool RestrictedReceive = false;
 
         public void Dispose()
         {
@@ -48,6 +51,9 @@ namespace EOSChat
                 {
                     receivedBytes = this.Socket.Receive(receivedData);
                     Application.ResourceMeters.BytesReceivedTotal += receivedBytes;
+                    TotalBytesReceived += receivedBytes;
+                    
+                    
 
                 } catch (Exception error)
                 {
@@ -67,6 +73,9 @@ namespace EOSChat
                     return;
                 }
 
+                if (RestrictedReceive)
+                    continue;
+
                 string stringContent = Encoding.ASCII.GetString(receivedData, 0, receivedBytes);
                 if (receivedBytes == 0 || receivedBytes == 2)
                     continue;
@@ -76,6 +85,8 @@ namespace EOSChat
                 try
                 {
                     payloadObject = JsonConvert.DeserializeObject(stringContent);
+
+                    PacketsReceived += 1;
 
                     EventFlag eventFlag = (EventFlag)payloadObject.flag;
                     string eventContent = (string)payloadObject.content;
