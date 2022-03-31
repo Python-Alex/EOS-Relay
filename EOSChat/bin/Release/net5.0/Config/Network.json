@@ -1,0 +1,5 @@
+{
+	"MaxPayloadsPerSecond": 400,
+	"MaxDataReceive": 4096,
+	"MaxClientTimeout": 3600
+}

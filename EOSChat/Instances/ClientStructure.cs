@@ -11,7 +11,7 @@ namespace EOSChat
         {
             foreach(ClientStructure clientStructure in clientStructures)
             {
-                if (clientStructure.Id.ToString() == id)
+                if (clientStructure.Id == id)
                     return clientStructure;
             }
 

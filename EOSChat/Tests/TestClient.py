@@ -15,29 +15,14 @@ class Client2:
     password = "asdasd"
     email = "obfuscate@gmail.com"
 
+
 def Client1Process():
     client = socket.socket()
     client.connect(('127.0.0.1', 52030))
 
     SendPayload(client, CreatePayload(14, f"{Client1.username};{Client1.password}", Client1.clientId))
-
-    while(True):
-        recv = client.recv(4960).decode()
-        print(recv)
-        time.sleep(1)
-
-def Client2Process():
-    client = socket.socket()
-    client.connect(('127.0.0.1', 52030))
-
-    SendPayload(client, CreatePayload(14, f"{Client2.username};{Client2.password}", Client2.clientId))
-    time.sleep(0.025)
-    SendPayload(client, CreatePayload(10, "", Client1.clientId))
-
-    while(True):
-        recv = client.recv(4960).decode()
-        print(recv)
-        time.sleep(1)
+    time.sleep(0.25)
+    SendPayload(client, CreatePayload(1, "You're a bitch", Client2.clientId))
 
 def CreatePayload(flag: int, content: str, clientid: str):
     return json.dumps({"flag": flag, "content": content, "clientId": clientid}).encode()
@@ -46,5 +31,6 @@ def SendPayload(socket: socket.socket, payload: bytes):
     socket.send(payload)
 
 threading.Thread(target=Client1Process).start()
-time.sleep(1)
-threading.Thread(target=Client2Process).start()
+while(True):
+    time.sleep(1)
+#threading.Thread(target=Client2Process).start()

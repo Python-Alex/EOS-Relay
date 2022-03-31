@@ -60,7 +60,7 @@ namespace EOSChat.Application
 
             BytesReceivedBefore = BytesReceivedTotal - BytesReceivedBefore;
 
-            Console.WriteLine($"[ResourceMeter] Bytes Received Last 10 Sec: {BytesReceivedBefore} - RAM Usage: {System.Diagnostics.Process.GetCurrentProcess().PrivateMemorySize64 / 1024 / 1024}MB");
+            //Console.WriteLine($"[ResourceMeter] Bytes Last 10 Sec: {BytesReceivedBefore}, RAM Usage: {System.Diagnostics.Process.GetCurrentProcess().PrivateMemorySize64 / 1024 / 1024}MB, Max Bandwidth: {MaxBandwidthPerClient * ActiveClientStructure.clientStructures.Count()}");
 
             _ConnectionTimerTick++;
             _DataCheckTimerTick++;
@@ -69,7 +69,7 @@ namespace EOSChat.Application
 
     public static class ResourceLimit
     {
-        public static Int64 MaxPayloadReceivesPerMinute = 0;
-        public static Int64 MaxDataReceive = 0; 
+        public static int MaxPayloadReceivesPerMinute = 0;
+        public static int MaxDataReceive = 0; 
     }
 }
