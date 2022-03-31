@@ -5,9 +5,7 @@ C:\Users\devpc\source\repos\EOSChat\EOSChat\bin\Release\net5.0\EOSChat.runtimeco
 C:\Users\devpc\source\repos\EOSChat\EOSChat\bin\Release\net5.0\EOSChat.dll
 C:\Users\devpc\source\repos\EOSChat\EOSChat\bin\Release\net5.0\ref\EOSChat.dll
 C:\Users\devpc\source\repos\EOSChat\EOSChat\bin\Release\net5.0\EOSChat.pdb
-C:\Users\devpc\source\repos\EOSChat\EOSChat\bin\Release\net5.0\Autofac.dll
 C:\Users\devpc\source\repos\EOSChat\EOSChat\bin\Release\net5.0\Newtonsoft.Json.dll
-C:\Users\devpc\source\repos\EOSChat\EOSChat\bin\Release\net5.0\System.Web.UI.DataBinder.dll
 C:\Users\devpc\source\repos\EOSChat\EOSChat\obj\Release\net5.0\EOSChat.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\devpc\source\repos\EOSChat\EOSChat\obj\Release\net5.0\EOSChat.AssemblyInfoInputs.cache
 C:\Users\devpc\source\repos\EOSChat\EOSChat\obj\Release\net5.0\EOSChat.AssemblyInfo.cs

@@ -14,7 +14,5 @@ C:\Users\devpc\source\repos\EOSChat\EOSChat\obj\Debug\net5.0\EOSChat.dll
 C:\Users\devpc\source\repos\EOSChat\EOSChat\obj\Debug\net5.0\ref\EOSChat.dll
 C:\Users\devpc\source\repos\EOSChat\EOSChat\obj\Debug\net5.0\EOSChat.pdb
 C:\Users\devpc\source\repos\EOSChat\EOSChat\obj\Debug\net5.0\EOSChat.genruntimeconfig.cache
-C:\Users\devpc\source\repos\EOSChat\EOSChat\bin\Debug\net5.0\Autofac.dll
 C:\Users\devpc\source\repos\EOSChat\EOSChat\obj\Debug\net5.0\EOSChat.csproj.CopyComplete
 C:\Users\devpc\source\repos\EOSChat\EOSChat\bin\Debug\net5.0\Newtonsoft.Json.dll
-C:\Users\devpc\source\repos\EOSChat\EOSChat\bin\Debug\net5.0\System.Web.UI.DataBinder.dll

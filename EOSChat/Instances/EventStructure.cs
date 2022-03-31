@@ -118,8 +118,9 @@ namespace EOSChat
                 connectionStructure.clientStructure = clientStructure;
                 connectionStructure.connectionState = ConnectionState.CLIENT_STATE;
                 connectionStructure.Socket.Send(Encoding.ASCII.GetBytes(EventReference.CreatePayload(EventFlag.LOGIN_STATE_SUCCESSFUL, "logged in", clientId)));
-             
+#if DEBUG
                 Console.WriteLine("[ConnectionStructure] Switching Payload Execution Method, Client Logged In");
+#endif
 
             }
         }
@@ -188,8 +189,9 @@ namespace EOSChat
             connectionStructure.clientStructure = new ClientStructure(connectionStructure, username, email, passwordHash, newGuid.ToString());
 
             connectionStructure.connectionState = ConnectionState.CLIENT_STATE;
+#if DEBUG
             Console.WriteLine("[ConnectionStructure] Switching Payload Execution Method, Client Registered New Profile");
-
+#endif
             return;
 
         }
@@ -213,20 +215,19 @@ namespace EOSChat
 
         static void Event_ClientMessageSend(ClientStructure clientStructure, string eventContent, string clientId)
         {
+
             if (clientStructure.Id == clientId)
                 return;
 
-            ClientStructure receivingClient = ActiveClientStructure.FromId(clientId);
-            if (receivingClient is null)
+            if (ActiveClientStructure.FromId(clientId) == null)
                 return;
 
-            string receiveMessagePayload = CreatePayload(EventFlag.CLIENT_MESSAGE_RECEIVE, eventContent, clientStructure.Id.ToString());
-            SendPayload(receivingClient, receiveMessagePayload);
+            SendPayload(ActiveClientStructure.FromId(clientId), CreatePayload(EventFlag.CLIENT_MESSAGE_RECEIVE, eventContent, clientId));
+            
         }
 
         static void Event_ClientUpdateUsername(ClientStructure clientStructure, string eventContext, string clientId)
         {
-            Console.WriteLine(clientId is null);
             if (eventContext.Length > 24)
             {
                 SendPayload(clientStructure, CreatePayload(EventFlag.UPDATE_ERROR, "username was too long", clientId));

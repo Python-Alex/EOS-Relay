@@ -9,6 +9,8 @@ namespace EOSChat
     {
         static void Main(string[] args)
         {
+            Config.ConfigurationReader.SetAutomaticConfigurations();
+
             FileCredentials.CredentialWriter.SetupCredentialStaticFiles();
 
             Console.WriteLine("[EOS] Starting Program at " + DateTime.Now.ToString());
@@ -20,7 +22,8 @@ namespace EOSChat
 
             while (true)
             {
-                Thread.Sleep(500);
+                Config.ConfigurationReader.SetAutomaticConfigurations(); // reads configuration every 1 second, dynamic updating is safe!
+                Thread.Sleep(10000);
             }
         }
     }

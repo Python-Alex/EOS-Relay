@@ -8,7 +8,7 @@ using System.Net.Sockets;
 namespace EOSChat
 {
     // IDisposable so we can properly cleanup this class, preventing possible memory leaks
-    public class ConnectionStructure : IDisposable
+    public class ConnectionStructure
     {
         // references into client structure after login/regster process
 
@@ -19,20 +19,6 @@ namespace EOSChat
         public int PacketsReceived = 0;
         public int TotalBytesReceived = 0;
         public bool RestrictedReceive = false;
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        ~ConnectionStructure()
-        {
-            Dispose(false);
-        }
-        public virtual void Dispose(bool disposing)
-        {
-            
-        }
 
         public ConnectionStructure(Socket socket, IPEndPoint ipendpoint)
         {
@@ -85,14 +71,16 @@ namespace EOSChat
                 try
                 {
                     payloadObject = JsonConvert.DeserializeObject(stringContent);
-
+                    Console.WriteLine(payloadObject.ToString());
                     PacketsReceived += 1;
 
                     EventFlag eventFlag = (EventFlag)payloadObject.flag;
                     string eventContent = (string)payloadObject.content;
                     string clientId = (string)payloadObject.clientId;
 
+#if DEBUG
                     Console.WriteLine($"[ConnectionStructure] Parsed Payload with Flag " + eventFlag.ToString());
+#endif
 
                     if (clientId is null)
                         clientId = "";
@@ -101,7 +89,7 @@ namespace EOSChat
                 
                 } catch (Exception error)
                 {
-                    Console.WriteLine("[ConnectionStructure] Data Error, " + error.Message);
+                    Console.WriteLine("[ConnectionStructure] Data Error, " + error.Message + " " + error.TargetSite.Name);
                 }
 
 
@@ -115,7 +103,20 @@ namespace EOSChat
                 Action<ConnectionStructure, string, string> action;
                 ConnectionEventReference.PayloadExecuteTable.TryGetValue(eventFlag, out action);
 
-                action(this, content, id);
+                if (action is null)
+                {
+                    Socket.Send(Encoding.ASCII.GetBytes(EventReference.CreatePayload(EventFlag.UNAUTHORIZED_REQUEST, "invalid context", id)));
+                    return false;
+                }    
+                    
+
+                try
+                {
+                    action(this, content, id);
+                } catch (Exception error)
+                {
+                    Console.WriteLine("[ConnectionStructure] Execute Error, " + error.Message + " " + error.StackTrace);
+                }
                 return true; 
             }
 
@@ -125,7 +126,20 @@ namespace EOSChat
                 Action<ClientStructure, string, string> action;
                 EventReference.PayloadExecuteTable.TryGetValue(eventFlag, out action);
 
-                action(clientStructure, content, id);
+                if (action is null)
+                {
+                    EventReference.SendPayload(clientStructure, EventReference.CreatePayload(EventFlag.UNAUTHORIZED_REQUEST, "invalid context", id));
+                    return false;
+                }
+
+                try
+                {
+                    action(clientStructure, content, id);
+                }
+                catch (Exception error)
+                {
+                    Console.WriteLine("[ConnectionStructure] Execute Error, " + error.Message + " " + error.StackTrace);
+                }
                 return true;
             }
 
